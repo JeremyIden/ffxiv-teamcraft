@@ -40,15 +40,16 @@ export class AriyalaLinkParser implements ExternalListLinkParser {
                 Object.keys(gear.items).forEach(slot => {
                     entries.push({ itemId: gear.items[slot], quantity: 1 });
                     const materias: string[] = gear.materiaData[`${slot}-${gear.items[slot]}`];
-                    entries.push(...materias.map(materia => {
-                        return {
-                            itemId: AriyalaMateria[materia],
-                            // TODO handle overmeld slots etc.
-                            quantity: 1
-                        }
-                    }));
+                    if (materias !== undefined) {
+                        entries.push(...materias.map(materia => {
+                            return {
+                                itemId: AriyalaMateria[materia],
+                                // TODO handle overmeld slots etc.
+                                quantity: 1
+                            };
+                        }));
+                    }
                 });
-                // TODO consumables too
                 return entries;
             })
         );
